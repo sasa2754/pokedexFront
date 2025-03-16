@@ -87,7 +87,7 @@ const Register = () => {
 
             <div className="flex items-center justify-center min-h-screen bg-neutral-600">
                 <Gameboy buttonA={buttonA} buttonB={() => {if (page == 1) return; setPage(page - 1)}}>
-                    <div className="flex relative justify-center bg-amber-300 w-full rounded-xl">
+                    <div className="flex relative justify-center bg-amber-300 w-full h-full rounded-xl">
                         { page == 1 ? (
                             <>
                                 <Image src={prof} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>
@@ -131,14 +131,13 @@ const Register = () => {
                         ) : page == 7 ? (
                             <>
                                 <Image src={cenario1} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>
-                                <div className="absolute grid grid-cols-4 gap-2 p-3">
+                                <div className="scrollhost absolute grid items-center justify-center grid-cols-4 gap-2 md:p-3 p-1 w-full h-full max-h-full overflow-auto rounded-lg">
                                     {avatares?.map((avatar, index) => (
-                                        <div key={index} className="w-20 h-20 p-1 bg-gray-200 rounded-lg flex items-center justify-center shadow-md">
+                                        <div key={index} className="aspect-square p-1 bg-gray-200 rounded-lg flex items-center justify-center shadow-md">
                                             <Image priority width={300} height={300} src={`http://localhost:8080${avatar.url}`} alt={avatar.name} className="w-full h-full object-cover rounded-lg" />
                                         </div>
                                     ))}
                                 </div>
-                                {/* <Baloon classExtra="absolute" text="Agora escolha um avatar que mais combine com você!"></Baloon> */}
                             </>
                         ) : page == 8 ? (
                             <>
