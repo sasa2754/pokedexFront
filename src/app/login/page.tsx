@@ -22,16 +22,21 @@ const Login = () => {
     const router = useRouter();
 
     const validateLogin = async () => {
+        console.log("oi")
         try {
             const response = await axios.post("http://localhost:8080/user/login", {
                 email: email,
                 password: pass,
             });
+            
     
-            const token = response.headers["authorization"];
+            const token = response.data.token;
             console.log(token);
     
-            if (token) localStorage.setItem("Token", token);
+            if (token) 
+                localStorage.setItem("Token", token);
+            else
+                setPage(3);
     
             router.push(ROUTES.game);
         } catch (error) {
@@ -40,9 +45,22 @@ const Login = () => {
         }
     };
 
+    const buttonA = () => {
+        if (page == 2) {
+            validateLogin();
+            // setPage(3);
+        }
+
+        else if (page == 3)
+            setPage(2);
+
+        else
+            setPage(page + 1);
+    }
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-neutral-600">
-            <Gameboy buttonA={() => { if (page == 2) setPage(3); else if (page == 3) setPage(2); else { setPage(page + 1);  validateLogin}}} buttonB={() => {if (page == 1) return; setPage(page - 1)}}>
+            <Gameboy buttonA={buttonA} buttonB={() => {if (page == 1) return; setPage(page - 1)}}>
                 <div className="flex relative justify-center bg-amber-300 w-full rounded-xl">
                     { page == 1 ? (
                         <>

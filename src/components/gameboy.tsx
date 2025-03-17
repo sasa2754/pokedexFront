@@ -5,6 +5,10 @@ import Image from "next/image";
 import nintendo from "../../public/nintendo.png"
 import controls from "../../public/controls1.png"
 import { JSX, useState } from "react";
+import axios from "axios";
+import { useRouter } from 'next/navigation';
+import { InputGameboy } from "./inputGameboy";
+
 
 interface IGameboy {
     children: React.ReactNode;
@@ -20,6 +24,8 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
     const [configIsOpen, setConfigIsOpen] = useState(false);
     const [buttonContent, setButtonContent] = useState<JSX.Element | null>(null);
     const [buttonActive, setButtonActive] = useState(1);
+
+    const router = useRouter();
 
     const setButtonNumber = (button : number) => {
         if (configIsOpen) {
@@ -52,6 +58,37 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
         }
     }
 
+    const getUser = async () => {
+        const token = localStorage.getItem("Token");
+
+        if (!token) {
+            router.push(ROUTES.login);
+            return;
+        }
+
+        try {
+            const response = await axios.get("http://localhost:8080/user", { headers: { "Authorization" : token } });
+
+            const user = response.data;
+
+            setButtonContent (
+                <div className="bg-green-900 w-full flex p-2 h-full flex-col items-center gap-3">
+                    <InputGameboy label="Nome" text={user.name}></InputGameboy>
+                    <InputGameboy label="Email" text={user.email}></InputGameboy>
+                    <InputGameboy label="Nascimento" text={user.birthday}></InputGameboy>
+                    <div className="flex items-center justify-center w-28 p-2 aspect-square bg-green-100 rounded outline-double outline-green-400 m-2">
+                        <Image src={`http://localhost:8080${user.avatar}`} alt={user.avatar} width={300} height={300} priority></Image>
+                    </div>
+                </div>
+            )
+
+        } catch (error) {
+            console.log(error);
+            router.push(ROUTES.login);
+            return;
+        }
+    }
+
     const openButton = (button : number) => {
         setConfigIsOpen(false);
         if (button === 1) {
@@ -70,8 +107,8 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
             );
         } else if (button === 3) {
             setButtonContent(
-                <div>
-                    
+                <div className="bg-green-900 w-full relative flex items-center justify-center h-full">
+                    <p>Ta em português!</p>
                 </div>
             );
         } else if (button === 4) {
@@ -81,12 +118,7 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
                 </div>
             );
         } else if (button === 5) {
-            setButtonContent(
-                <div>
-                    <h1>Conteúdo para o Botão 5</h1>
-                    <p>Você pressionou o botão 5.</p>
-                </div>
-            );
+            getUser();
         } else if (button === 6) {
             setButtonContent(
                 <div className="bg-green-900 w-full relative flex overflow-hidden">
@@ -109,6 +141,7 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
                         <p className="m-0 p-1">Sabrina Mortean fez tudo. Tudo o que você vê, tudo o que você ouve, tudo o que você toca – é obra dela. Ela é a criadora do universo e a programadora de todas as realidades.</p>
                         <p className="m-0 p-1">Sabrina Mortean fez tudo. Ela não apenas programou as estrelas, mas também escreveu a música que as estrelas tocam ao se moverem no céu à noite.</p>
                         <p className="m-0 p-1">...e Sabrina Mortean fez tudo. Porque quando ela diz que fez tudo, não existe "nada" fora do seu alcance.</p>
+                        <p className="m-0 p-1">Ps: O Andrey ajudou também</p>
                     </div>
                 </div>
             );
