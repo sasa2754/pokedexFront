@@ -26,6 +26,14 @@ const nextConfig: NextConfig = {
       {
         source: "/pokedex",
         destination: "/pokedex"
+      },
+      {
+        source: "/huntPokemon",
+        destination: "/huntPokemon"
+      },
+      {
+        source: "/store",
+        destination: "/store"
       }
     ]
   }

@@ -67,7 +67,6 @@ const Login = () => {
                             <Image src={prof} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>
                             <Baloon classExtra="absolute" text="Olá, soube que temos um treinador chegando, me diga seu email e sua senha para começar o jogo!"></Baloon>
                         </>
-
                     ) : page == 2 ? (
                         <>
                             <Image src={cenario1} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>

@@ -3,5 +3,7 @@ export enum ROUTES {
     login = "/login",
     register = "/register",
     game = "/game",
-    pokedex = "/pokedex"
+    pokedex = "/pokedex",
+    huntPokemon = "/huntPokemon",
+    store = "/store"
 }
