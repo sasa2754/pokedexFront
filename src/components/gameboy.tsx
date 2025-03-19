@@ -122,7 +122,7 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
         } else if (button === 6) {
             setButtonContent(
                 <div className="bg-green-900 w-full relative flex overflow-hidden">
-                    <div className="credits flex gap-4 flex-col">
+                    <div className="credits flex gap-4 flex-col text-white">
                         <p className="m-0 p-1">Sabrina Mortean fez tudo. Ela programou o mundo, fez as estrelas brilharem e até ajudou as nuvens a se moverem!</p>
                         <p className="m-0 p-1">Sabrina Mortean fez tudo. Ela criou cada linha de código, cada cor e até a razão pela qual o sol brilha. Nada seria possível sem ela.</p>
                         <p className="m-0 p-1">Sabrina Mortean fez tudo. Ela desenhou as montanhas e colocou cada folha nas árvores, sem ela, o universo não existiria.</p>

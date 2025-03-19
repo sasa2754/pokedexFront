@@ -24,6 +24,7 @@ const Login = () => {
     const validateLogin = async () => {
         console.log("oi")
         try {
+            console.log("ta aqui")
             const response = await axios.post("http://localhost:8080/user/login", {
                 email: email,
                 password: pass,
