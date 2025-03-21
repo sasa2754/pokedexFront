@@ -224,7 +224,7 @@ const HuntPokemon = () => {
                     <div className="absolute flex h-full w-full items-center justify-center">
                         {pokemon ? (
                             <div className="flex h-full w-full justify-center p-2">
-                                <Image className="md:w-60 md:h-60 aspect-square rounded-full w-46 h-46 bg-radial from-blue-100 from-10% to-transparent to-90%" src={pokemon.isShiny ? pokemon.imageShiny : pokemon.image } alt="aaa" width={400} height={400} priority></Image>
+                                <Image className="md:w-60 md:h-60 aspect-square rounded-full w-46 h-46 bg-radial from-blue-100 from-10% to-transparent to-90%" src={pokemon.isShiny ? pokemon.imageShiny : pokemon.image} alt="aaa" width={400} height={400} priority></Image>
 
                                 {page == 1 ? (
                                     <Baloon classExtra="absolute" text="Um pokemon selvagem apareceu!"></Baloon>
