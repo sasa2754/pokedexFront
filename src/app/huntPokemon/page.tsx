@@ -57,7 +57,7 @@ const HuntPokemon = () => {
                 return;
             }
             else if (option == 2) {
-                setPage(4);
+                setPage(3);
                 return;
             }
         }
