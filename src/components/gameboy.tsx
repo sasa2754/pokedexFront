@@ -8,6 +8,7 @@ import { JSX, useState } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { InputGameboy } from "./inputGameboy";
+import { api, BASE_URL } from "@/constants/api";
 
 
 interface IGameboy {
@@ -67,7 +68,7 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
         }
 
         try {
-            const response = await axios.get("https://pokedexback-production.up.railway.app/user", { headers: { "Authorization" : token } });
+            const response = await api.get("/user", { headers: { "Authorization" : token } });
 
             const user = response.data;
 
@@ -77,7 +78,7 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
                     <InputGameboy label="Email" text={user.email}></InputGameboy>
                     <InputGameboy label="Nascimento" text={user.birthday}></InputGameboy>
                     <div className="flex items-center justify-center w-28 p-2 aspect-square bg-green-100 rounded outline-double outline-green-400 m-2">
-                        <Image src={`https://pokedexback-production.up.railway.app${user.avatar}`} alt={user.avatar} width={300} height={300} priority></Image>
+                        <Image src={`${BASE_URL}/${user.avatar}`} alt={user.avatar} width={300} height={300} priority></Image>
                     </div>
                 </div>
             )
@@ -172,7 +173,7 @@ export const Gameboy = ({ children, buttonA, buttonB, buttonBaixo, buttonCima, b
     }
 
     return (
-        <div className="flex h-full itens-center justify-center w-full">
+        <div className="flex h-full items-center justify-center w-full">
             {/* <audio src=""></audio> */}
             <div className="bg-gray-300 h-5/6 w-full m-2 p-3 max-w-[30rem] md:min-h-[50rem] rounded-2xl rounded-br-[10rem] shadow-2xl inset-shadow-sm shadowSquare">
                 <div className="flex justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-sm inset-shadow-gray-800">

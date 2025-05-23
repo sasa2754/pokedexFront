@@ -198,16 +198,16 @@ const Register = () => {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-            {loading && (
-                <div className="relative w-full flex items-center justify-center">
-                    <Image className="object-cover rounded-xl" src={cenarioFrenteLab} alt="aaa" fill></Image>
-                    <CircularProgress color="warning" size={80} className="absolute self-center rounded-xl"/>
-                </div>
-            )}
 
             <div className="flex items-center justify-center min-h-screen bg-neutral-600">
                 <Gameboy buttonA={buttonA} buttonB={() => {if (page == 1) return; setPage(page - 1)}} buttonCima={buttonCima} buttonBaixo={buttonBaixo} buttonDireita={buttonDireita} buttonEsquerda={buttonEsquerda}>
                     <div className="flex relative justify-center bg-amber-300 w-full h-full rounded-xl">
+                        {loading && (
+                            <div className="relative w-full flex items-center justify-center">
+                                <Image className="object-cover rounded-xl" src={cenarioFrenteLab} alt="aaa" fill></Image>
+                                <CircularProgress color="warning" size={80} className="absolute self-center rounded-xl"/>
+                            </div>
+                        )}
                         { page == 1 ? (
                             <>
                                 <Image src={prof} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>
