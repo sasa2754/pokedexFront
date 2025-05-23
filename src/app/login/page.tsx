@@ -25,7 +25,7 @@ const Login = () => {
         console.log("oi")
         try {
             console.log("ta aqui")
-            const response = await axios.post("http://localhost:8080/user/login", {
+            const response = await axios.post("https://pokedexback-production.up.railway.app/user/login", {
                 email: email,
                 password: pass,
             });

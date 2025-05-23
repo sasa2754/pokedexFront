@@ -63,7 +63,7 @@ const Register = () => {
     const validateRegister = async (avatar : avatar) => {
         try {
             console.log(avatar);
-            const response = await axios.post("http://localhost:8080/user/register", {
+            const response = await axios.post("https://pokedexback-production.up.railway.app/user/register", {
                 name: name,
                 email: email,
                 birthday: birthday,
@@ -71,7 +71,7 @@ const Register = () => {
                 password: pass,
             });
     
-            const responseLogin = await axios.post("http://localhost:8080/user/login", {
+            const responseLogin = await axios.post("https://pokedexback-production.up.railway.app/user/login", {
                 email: email,
                 password: pass,
             });
@@ -94,7 +94,7 @@ const Register = () => {
 
     const getAvatar = async () => {
         try {
-            const response = (await axios.get<avatar[]>("http://localhost:8080/user/avatar")).data;
+            const response = (await axios.get<avatar[]>("https://pokedexback-production.up.railway.app/user/avatar")).data;
             console.log(response);
 
             console.log(response[1].url);

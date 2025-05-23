@@ -135,7 +135,7 @@ const HuntPokemon = () => {
                 return;
             }
 
-            const response = await axios.get<PokemonRandom>("http://localhost:8080/pokemon/random", { headers: { "Authorization" : token }});
+            const response = await axios.get<PokemonRandom>("https://pokedexback-production.up.railway.app/pokemon/random", { headers: { "Authorization" : token }});
             console.log(response.data);
 
             setPokemon(response.data);
@@ -158,7 +158,7 @@ const HuntPokemon = () => {
         console.log(pokeball)
 
         try {
-            const response = await axios.post("http://localhost:8080/pokemon/hunt", {
+            const response = await axios.post("https://pokedexback-production.up.railway.app/pokemon/hunt", {
                 pokemon: pokemon,
                 pokeballName: pokeball,
             }, { headers: { "Authorization" : token } });
@@ -183,7 +183,7 @@ const HuntPokemon = () => {
         }
 
         try {
-            const response = await axios.get("http://localhost:8080/user", { headers: { "Authorization" : token } });
+            const response = await axios.get("https://pokedexback-production.up.railway.app/user", { headers: { "Authorization" : token } });
 
             const user = response.data;
             console.log(user);

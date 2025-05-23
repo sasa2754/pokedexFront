@@ -26,7 +26,7 @@ export const Avatar = ({ index, name, url, activeIndex } : IAvatar) => {
 
     return (
         <div ref={avatarRef} key={index} className={`aspect-square ${ index === activeIndex ? "animate-gameboy-pulse" : ""} p-1 bg-gray-200 rounded-lg flex items-center justify-center shadow-md`}>
-            <Image priority width={300} height={300} src={`http://localhost:8080${url}`} alt={name} className="w-full h-full object-cover rounded-lg" />
+            <Image priority width={300} height={300} src={`https://pokedexback-production.up.railway.app${url}`} alt={name} className="w-full h-full object-cover rounded-lg" />
         </div>
     )
 }

@@ -43,7 +43,7 @@ const Pokedex = () => {
         }
 
         try {
-            const response = await axios.get("http://localhost:8080/user", { headers: { "Authorization" : token } });
+            const response = await axios.get("https://pokedexback-production.up.railway.app/user", { headers: { "Authorization" : token } });
 
             const user = response.data;
 
