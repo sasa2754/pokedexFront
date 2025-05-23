@@ -9,23 +9,25 @@ import prof from "../../../public/profOak.avif";
 import profTriste from "../../../public/profOakTriste.webp";
 import cenario1 from "../../../public/pokeCenario1.png";
 import { useState } from "react";
-import { TextField } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 import Link from "next/link";
 import axios from "axios";
+import { api } from "@/constants/api";
 
 
 const Login = () => {
     const [page, setPage] = useState(1);
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const [loading, setLoading] = useState(false);
+
 
     const router = useRouter();
 
     const validateLogin = async () => {
-        console.log("oi")
+        setLoading(true);
         try {
-            console.log("ta aqui")
-            const response = await axios.post("https://pokedexback-production.up.railway.app/user/login", {
+            const response = await api.post(`/user/login`, {
                 email: email,
                 password: pass,
             });
@@ -43,13 +45,14 @@ const Login = () => {
         } catch (error) {
             console.error(error);
             setPage(3);
+        } finally {
+            setLoading(false);
         }
     };
 
     const buttonA = () => {
         if (page == 2) {
             validateLogin();
-            // setPage(3);
         }
 
         else if (page == 3)
@@ -71,6 +74,11 @@ const Login = () => {
                     ) : page == 2 ? (
                         <>
                             <Image src={cenario1} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>
+                            {loading && (
+                                <div className="relative w-full flex items-center justify-center">
+                                    <CircularProgress color="warning" size={80} className="absolute self-center rounded-xl"/>
+                                </div>
+                            )}
                             <div className="absolute h-full w-full flex text-black">
                                 <div className="w-full flex flex-col items-center gap-3 self-end bg-amber-100 outline m-2 p-3 rounded">
                                     <h1 className="text-xl font-bold text-red-600">Login</h1>

@@ -9,10 +9,11 @@ import prof from "../../../public/profOakRegister.jpg";
 import profPokemon from "../../../public/profOakPokemons.avif";
 import pokeballs from "../../../public/pokeballs.avif";
 import profExplicando from "../../../public/profOakExplicando.avif";
+import cenarioFrenteLab from "../../../public/cenarioFrenteLab.jpg";
 import profTriste from "../../../public/profOakTriste.webp";
 import cenario1 from "../../../public/pokeCenario1.png";
 import { useEffect, useState } from "react";
-import { TextField } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 import Link from "next/link";
 import axios from "axios";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -21,6 +22,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Avatar } from "@/components/avatar";
 import dayjs, { Dayjs } from "dayjs";
+import { api } from "@/constants/api";
+import 'dayjs/locale/pt-br';
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+dayjs.extend(localizedFormat);
+dayjs.locale('pt-br');
 
 interface avatar {
     name: string,
@@ -57,13 +64,15 @@ const Register = () => {
     const [avatares, setAvatares] = useState<avatar[]>();
     const [pass, setPass] = useState("");
     const [coord, setCoord] = useState<Coordinate>(new Coordinate(0, 0, 4));
+    const [loading, setLoading] = useState(true);
 
     const router = useRouter();
 
     const validateRegister = async (avatar : avatar) => {
+        setLoading(true);
         try {
             console.log(avatar);
-            const response = await axios.post("https://pokedexback-production.up.railway.app/user/register", {
+            const response = await api.post(`/user/register`, {
                 name: name,
                 email: email,
                 birthday: birthday,
@@ -71,7 +80,25 @@ const Register = () => {
                 password: pass,
             });
     
-            const responseLogin = await axios.post("https://pokedexback-production.up.railway.app/user/login", {
+            if (response.status == 200) {
+                login();
+            }
+            else {
+                console.log(response.status);
+                setPage(7);
+            }
+        } catch (error) {
+            console.error(error);
+            setPage(7);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const login = async () => {
+        setLoading(true);
+        try {
+            const responseLogin = await api.post(`/user/login`, {
                 email: email,
                 password: pass,
             });
@@ -89,21 +116,25 @@ const Register = () => {
         } catch (error) {
             console.error(error);
             setPage(7);
+        } finally {
+            setLoading(false);
         }
-    };
+    }
 
     const getAvatar = async () => {
+        setLoading(true);
         try {
-            const response = (await axios.get<avatar[]>("https://pokedexback-production.up.railway.app/user/avatar")).data;
+            const response = (await api.get<avatar[]>(`/user/avatar`)).data;
             console.log(response);
 
             console.log(response[1].url);
 
-    
             setAvatares(response);
         } catch (error) {
             console.error(error);
             setPage(9);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -166,7 +197,13 @@ const Register = () => {
     }, []);
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
+            {loading && (
+                <div className="relative w-full flex items-center justify-center">
+                    <Image className="object-cover rounded-xl" src={cenarioFrenteLab} alt="aaa" fill></Image>
+                    <CircularProgress color="warning" size={80} className="absolute self-center rounded-xl"/>
+                </div>
+            )}
 
             <div className="flex items-center justify-center min-h-screen bg-neutral-600">
                 <Gameboy buttonA={buttonA} buttonB={() => {if (page == 1) return; setPage(page - 1)}} buttonCima={buttonCima} buttonBaixo={buttonBaixo} buttonDireita={buttonDireita} buttonEsquerda={buttonEsquerda}>
@@ -233,7 +270,6 @@ const Register = () => {
                         )}
                     </div>
                 </Gameboy>
-
             </div>
         </LocalizationProvider>
 

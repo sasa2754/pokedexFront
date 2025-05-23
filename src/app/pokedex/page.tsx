@@ -9,6 +9,10 @@ import Image from "next/image";
 import { PokemonView } from "@/components/pokemonPokedex";
 import pokemonTriste from "../../../public/pokemonTriste.png";
 import { Baloon } from "@/components/textBaloon";
+import { api } from "@/constants/api";
+import CircularProgress from '@mui/material/CircularProgress';
+import cenarioFrenteLab from "../../../public/cenarioFrenteLab.jpg";
+
 
 
 interface pokemons {
@@ -29,7 +33,7 @@ interface pokemons {
 const Pokedex = () => {
     const [pokemons, setPokemons] = useState<pokemons[]>();
     const [selectPokemon, setSelectPokemon] = useState(0);
-    const pokeRef = useRef<HTMLDivElement | null>(null);
+    const [loading, setLoading] = useState(true);
 
     const router = useRouter();
     
@@ -43,7 +47,7 @@ const Pokedex = () => {
         }
 
         try {
-            const response = await axios.get("https://pokedexback-production.up.railway.app/user", { headers: { "Authorization" : token } });
+            const response = await api.get(`/user`, { headers: { "Authorization" : token } });
 
             const user = response.data;
 
@@ -57,6 +61,9 @@ const Pokedex = () => {
             console.log(error);
             router.push(ROUTES.login);
             return;
+        } finally {
+            setLoading(false);
+            // setTimeout(() => setLoading(false), 500);
         }
     }
 
@@ -84,7 +91,12 @@ const Pokedex = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-neutral-600">
             <Gameboy buttonB={() => router.push(ROUTES.game)} buttonCima={buttonCima} buttonBaixo={buttonBaixo}>
-                { pokemons && pokemons?.length > 0 ? (
+                { loading ? (
+                    <div className="relative w-full flex items-center justify-center">
+                        <Image className="object-cover rounded-xl" src={cenarioFrenteLab} alt="aaa" fill></Image>
+                        <CircularProgress color="warning" size={80} className="absolute self-center rounded-xl"/>
+                    </div>
+                ) : pokemons && pokemons?.length > 0 ? (
                     <div className="grid grid-cols-5 gap-2 bg-red-800 w-full rounded-xl p-2">
                         <div className={`col-span-3 ${pokemons && pokemons?.length > 0 ? "bg-blue-300" : "bg-gray-600"}  p-4 rounded-lg`}>
                                 <div className="flex flex-col gap-3 items-center w-full">

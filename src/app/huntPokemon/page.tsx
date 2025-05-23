@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import { Baloon } from "@/components/textBaloon";
+import { api } from "@/constants/api";
+
 
 interface PokemonRandom {
     id: number,
@@ -57,7 +59,7 @@ const HuntPokemon = () => {
                 return;
             }
             else if (option == 2) {
-                setPage(3);
+                setPage(5);
                 return;
             }
         }
@@ -72,7 +74,8 @@ const HuntPokemon = () => {
         else if (page == 4 || page == 5) {
             getRandomPoke();
             setPage(1);
-            window.location.reload();
+            setOption(1);
+            setOptionPoke(1);
             return;
         }
         else {
@@ -135,7 +138,7 @@ const HuntPokemon = () => {
                 return;
             }
 
-            const response = await axios.get<PokemonRandom>("https://pokedexback-production.up.railway.app/pokemon/random", { headers: { "Authorization" : token }});
+            const response = await api.get<PokemonRandom>(`/pokemon/random`, { headers: { "Authorization" : token }});
             console.log(response.data);
 
             setPokemon(response.data);
@@ -158,7 +161,7 @@ const HuntPokemon = () => {
         console.log(pokeball)
 
         try {
-            const response = await axios.post("https://pokedexback-production.up.railway.app/pokemon/hunt", {
+            const response = await api.post(`/pokemon/hunt`, {
                 pokemon: pokemon,
                 pokeballName: pokeball,
             }, { headers: { "Authorization" : token } });
@@ -183,7 +186,7 @@ const HuntPokemon = () => {
         }
 
         try {
-            const response = await axios.get("https://pokedexback-production.up.railway.app/user", { headers: { "Authorization" : token } });
+            const response = await api.get(`/user`, { headers: { "Authorization" : token } });
 
             const user = response.data;
             console.log(user);
@@ -228,11 +231,10 @@ const HuntPokemon = () => {
 
                                 {page == 1 ? (
                                     <Baloon classExtra="absolute" text="Um pokemon selvagem apareceu!"></Baloon>
-                                    
                                 ) : page == 2 ?  (
                                     <div className="flex text-blue-800 p-1 gap-1 flex-col w-11/12 absolute self-end bg-amber-100 rounded outline">
                                         <button className={` ${option == 1 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>Caçar {capitalize(pokemon.name)} {option == 1 ? "<" : ""}</button>
-                                        <button className={` ${option == 2 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>Correr {option == 3 ? "<" : ""}</button>
+                                        <button className={` ${option == 2 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>Correr {option == 2 ? "<" : ""}</button>
                                     </div>
                                 ) : page == 3 ? (
                                     <div className="flex text-blue-800 p-1 gap-1 items-center justify-center absolute self-end bg-amber-100 rounded outline">
