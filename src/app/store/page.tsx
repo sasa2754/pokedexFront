@@ -63,7 +63,7 @@ const Store = () => {
                 console.log(error);
                 router.push(ROUTES.login);
                 return;
-        }
+            }
         }
 
 
@@ -96,6 +96,7 @@ const Store = () => {
                 setPage(4);
             } finally {
                 setLoading(false);
+                getUser();
             }
     }
 
@@ -158,58 +159,60 @@ const Store = () => {
         <div className="flex items-center justify-center min-h-screen bg-neutral-600">
             <Gameboy buttonA={buttonA} buttonB={buttonB} buttonCima={buttonCima} buttonBaixo={buttonBaixo}>
                 <div className="flex relative justify-center bg-amber-300 w-full rounded-xl">
-                    {loading && (
+                    {loading ? (
                         <div className="relative w-full flex items-center justify-center">
                             <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa" fill></Image>
                             <CircularProgress color="warning" size={80} className="absolute self-center rounded-xl"/>
                         </div>
-                    )}
-
-                    {page == 1 ? (
-                        <>
-                            <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
-                            <Baloon classExtra="absolute" text="Bem-vindo(a), o que você gostaria de comprar?"></Baloon>
-                        </>
-                    ) : page == 2 && user ? (
-                        <>
-                            <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
-                                <div className="flex absolute my-2 justify-end w-11/12">
-                                    <div className="bg-amber-100 flex gap-2 p-2 rounded-2xl items-center">
-                                        <Image className="object-cover rounded-full max-w-8" src={pokecoin} alt="aaa"></Image>
-                                        <h1 className="text-blue-900 font-bold p-1 rounded">{user.money}</h1>
-                                    </div>
-                                </div>
-                            <div className="flex text-blue-800 p-1 gap-1 flex-col w-11/12 absolute self-end bg-amber-100 rounded outline">
-
-                                <button className={`${option == 1 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
-                                Pokeball - 2 {option == 1 ? "<" : ""}
-                                </button>
-                                <button className={`${option == 2 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
-                                Greatball - 5 {option == 2 ? "<" : ""}
-                                </button>
-                                <button className={`${option == 3 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
-                                Ultraball - 20 {option == 3 ? "<" : ""}
-                                </button>
-                                <button className={`${option == 4 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
-                                Masterball - 1000 {option == 4 ? "<" : ""}
-                                </button>
-                            </div>
-                        </>
-                    ) : page == 3 ?(
-                        <>
-                            <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
-                            <Baloon classExtra="absolute" text="Obrigado por comprar na minha loja!"></Baloon>
-                        </>
-                    ) : page == 4 ? (
-                        <>
-                            <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
-                            <Baloon classExtra="absolute" text="Parece que você não tem dinheiro para esse item!"></Baloon>
-                        </>
                     ) : (
-
                         <>
-                            <Image src={profTriste} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>
-                            <Baloon classExtra="absolute" text="Acho que algum charmander deve ter colocado fogo sem querer nessa parte do sistema, vou arrumar o mais rápido possível, volte mais tarde!"></Baloon>
+                            {page == 1 ? (
+                                <>
+                                    <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
+                                    <Baloon classExtra="absolute" text="Bem-vindo(a), o que você gostaria de comprar?"></Baloon>
+                                </>
+                            ) : page == 2 && user ? (
+                                <>
+                                    <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
+                                        <div className="flex absolute my-2 justify-end w-11/12">
+                                            <div className="bg-amber-100 flex gap-2 p-2 rounded-2xl items-center">
+                                                <Image className="object-cover rounded-full max-w-8" src={pokecoin} alt="aaa"></Image>
+                                                <h1 className="text-blue-900 font-bold p-1 rounded">{user.money}</h1>
+                                            </div>
+                                        </div>
+                                    <div className="flex text-blue-800 p-1 gap-1 flex-col w-11/12 absolute self-end bg-amber-100 rounded outline">
+        
+                                        <button className={`${option == 1 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
+                                        Pokeball - 2 {option == 1 ? "<" : ""}
+                                        </button>
+                                        <button className={`${option == 2 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
+                                        Greatball - 5 {option == 2 ? "<" : ""}
+                                        </button>
+                                        <button className={`${option == 3 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
+                                        Ultraball - 20 {option == 3 ? "<" : ""}
+                                        </button>
+                                        <button className={`${option == 4 ? "animate-gameboy-pulse-pokemon font-semibold bg-amber-50" : ""} outline outline-blue-800 p-1 rounded`}>
+                                        Masterball - 1000 {option == 4 ? "<" : ""}
+                                        </button>
+                                    </div>
+                                </>
+                            ) : page == 3 ?(
+                                <>
+                                    <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
+                                    <Baloon classExtra="absolute" text="Obrigado por comprar na minha loja!"></Baloon>
+                                </>
+                            ) : page == 4 ? (
+                                <>
+                                    <Image className="object-cover rounded-xl" src={cenarioLoja} alt="aaa"></Image>
+                                    <Baloon classExtra="absolute" text="Parece que você não tem dinheiro para esse item!"></Baloon>
+                                </>
+                            ) : (
+        
+                                <>
+                                    <Image src={profTriste} alt="aaaa" className="flex object-cover grayscale-50 inset-shadow-2xs justify-center bg-gray-400 h-72 md:min-h-96 rounded-xl inset-shadow-2xl inset-shadow-gray-800"></Image>
+                                    <Baloon classExtra="absolute" text="Acho que algum charmander deve ter colocado fogo sem querer nessa parte do sistema, vou arrumar o mais rápido possível, volte mais tarde!"></Baloon>
+                                </>
+                            )}
                         </>
                     )}
                 </div>
