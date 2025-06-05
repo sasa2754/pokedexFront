@@ -17,11 +17,9 @@ export default function BackgroundMusic() {
   }, []);
 
   return (
-    <audio
-      ref={audioRef}
-      src="/music.mp3"
-      preload="auto"
-      loop
-    />
+    <audio ref={audioRef} autoPlay loop>
+      <source src="/music.mp3" type="audio/mpeg" />
+      Seu navegador não suporta áudio :(
+    </audio>
   );
 }
